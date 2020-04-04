@@ -1,0 +1,85 @@
+{%extends "base.html"%}
+{%block title%}Inicio{%endblock%}
+{%block content%}
+
+
+  {% for dato in datos_libro %}
+      <script>
+
+        function mensajeChange() {
+          console.log("change");
+          const mensaje = document.getElementById("mensaje");
+          const boton = document.getElementById("enviar");
+          console.log(boton)
+
+          if (mensaje.value.trim() !== "") {
+            console.log("Se muestra")
+            boton.removeAttribute('disabled')
+          } else {
+            boton.setAttribute('disabled', "true");
+          }
+        }
+
+      </script>
+
+      <tr>
+        <td>Titulo: {{dato.titulo}}</td>
+        <br>
+        <td>Autor: {{dato.autor}}</td>
+        <br>
+        <td>Genero: {{dato.genero}}</td>
+        <br>
+        <td>ISBN: {{dato.id}}</td>
+        <br>
+        <td>Año de pulicacion: {{dato.año}}</td>
+        <br>
+        <p></p>
+        Resumen
+        <br>
+        <br>
+        <td>{{dato.resumen}}</td>
+        <p></p>
+        <td>Votos: {{dato.votos}}</td>
+        <p></p>
+      </tr>
+    {% endfor %}
+
+    </br>
+    <hr>
+    Comentarios
+    <br>
+    <br>
+
+    {% for dato in datos_comentario %}
+
+      {{dato.2}}
+      {{dato.3}}
+      {{dato.1}}
+      <br>
+      {{dato.0}}
+
+      <p></p>
+    {% endfor %}
+
+
+    {% for dato in datos_usuario %}
+      <tr>
+          <td>{{dato}}</td>
+      </tr>
+    {% endfor %}
+
+    <br>
+    <hr>
+    <p>
+      {{request.user.first_name }} {{request.user.last_name }}
+      <form action="/visualizar/?isbn={{isbn}}" method="POST">{% csrf_token %}
+
+          <br>
+          <textarea onkeyup="mensajeChange()" name="comentario" id="mensaje" cols="30" rows="10"></textarea>
+          <br>
+          <input name="id_usuario" type="hidden" value="{{request.user.id }}">
+          <input name="isbn" type="hidden" value="{{isbn}}">
+          <input type="submit"  id="enviar" value="Comentar" disabled>
+      </form>
+
+{%endblock%}

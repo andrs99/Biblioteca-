@@ -1,0 +1,72 @@
+{%extends "base.html"%}
+{%block title%}Inicio{%endblock%}
+
+{%block content%}
+
+{% if libros %}
+
+
+
+
+
+
+      <table class="table table-striped table-dark">
+        <thead>
+            <tr>
+
+                <th scope="col">Busqueda: {{query}}</th>
+                <th scope="col">Libros encontrados: {{libros|length}}</th>
+
+              </tr>
+          <tr>
+
+            <th scope="col">Titulo</th>
+            <th scope="col">Autor</th>
+            <th scope="col">Genero</th>
+            <th scope="col">Año</th>
+            <th scope="col">ISBN</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for libro in libros %}
+            <tr>
+              <td>{{libro.titulo}}</td>
+              <td>{{libro.autor}}</td>
+              <td>{{libro.genero}}</td>
+              <td>{{libro.año}}</td>
+              <td>{{libro.id}}</td>
+              <td>
+                <form action="/visualizar/" method="GET">
+                    <button type="submit" class="btn btn-info">Ver</button>
+                    <input name="isbn" type="hidden" value="{{libro.id}}">
+                </form>
+              </td>
+
+            </tr>
+          {% endfor %}
+
+
+        </tbody>
+      </table>
+
+
+
+
+
+    {% else %}
+    <table class="table table-striped table-dark">
+        <thead>
+            <tr>
+
+                <th scope="col">Busqueda: {{query}}</th>
+                <th scope="col">Libros encontrados: {{libros|length}}</th>
+
+
+              </tr>
+
+        </thead>
+
+      </table>
+
+    {% endif %}
+{%endblock%}
